@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Temperature converter</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <style>
+        body {
+            margin: 10px;
+            background: #ebebeb;
+        }
+
+        .container {
+            width: 80%;
+            height: 100%;
+            background: teal;
+            color: #ebebeb;
+            padding: 10px;
+            text-align: center;
+            position: absolute;
+            margin-left: auto;
+            margin-right: auto;
+            left: 0;
+            right: 0;
+
+        }
+        #c, #f, .k, .clear{
+            border-radius: 3px;
+        }
+    </style>
+    <div class="container">
+        <h3 class="how-to">Convert a temperature into any of the units below.</h3>
+        <div class="fahrenheit"></div>
+        <br>
+        <div id="temp">
+            <label for="input">Your temperature:</label>
+            <br>
+            <input type="text" id="input" name="temp" width="50 px" minlength="1" maxlength="8" />
+            <span class="validity"></span>
+        </div>
+        <br>
+        <div class="buttons">
+            <button id="f">Fahrenheit</button>
+            <button id="c">Celsius</button>
+            <button class="k">Kelvin</button>
+        </div>
+        <br>
+        <button class="clear">Clear</button>
+    </div>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            let kelvinClicked = false;
+            let fahrenheitClicked = false;
+            let celsiusClicked = false;
+
+            const kelvin = 297;
+            const celsius = Math.floor(kelvin - 273);
+            const fahrenheit = Math.floor(celsius * (9 / 5) + 32);
+
+            $(".k").on('click', function () {
+                let input = document.getElementById("input");
+                console.log('kelvin clicked');
+                console.log(input.value);
+                if (input.value <= 0) {
+                    console.log('absolute zero');
+                    document.querySelector(".fahrenheit").innerHTML = '<h4>Absolute Zero: Please try a number above 0 to get an accurate temperature.</h4>';
+                }
+                else {
+                    let fahrenheit = Math.floor(((parseInt(input.value) - 273) * 9 / 5) + 32);
+                    console.log(fahrenheit);
+                    let celsius = Math.floor((parseInt(input.value) - 273));
+                    console.log(celsius);
+                    document.querySelector(".fahrenheit").innerHTML = "The temperature is " + fahrenheit + " degrees Fahrenheit and " + celsius + " degrees Celsius.";
+                }
+            })
+            $("#f").on('click', function () {
+                let input = document.getElementById("input");
+                console.log('fahrenheit clicked');
+                console.log(input.value);
+                let cResult = Math.floor((parseInt(input.value) - 32) * 5);
+                let celsius = Math.floor(cResult / 9);
+                console.log(celsius);
+                let kResult = Math.floor((parseInt(input.value) - 32) * 5);
+                let kelvin = Math.floor((kResult / 9) + 273.15);
+                console.log(kelvin);
+                if (kelvin <= 0) {
+                    document.querySelector(".fahrenheit").innerHTML = '<h4>Absolute Zero: Please try a number above -459.67 degrees Fahrenheit to get an accurate temperature.</h4>';
+                }
+                else {
+                    document.querySelector(".fahrenheit").innerHTML = "The temperature is " + celsius + " degrees Celsius and " + kelvin + " degrees Kelvin.";
+                }
+            })
+            $("#c").on('click', function () {
+                let input = document.getElementById("input");
+                let kelvin = Math.floor((parseInt(input.value) + 273));
+                console.log(kelvin);
+                let fahrenheit = Math.floor((parseInt(input.value) * 9 / 5) + 32);
+                console.log(fahrenheit);
+                if (kelvin <= 0) {
+                    document.querySelector(".fahrenheit").innerHTML = '<h4>Absolute Zero: Please try a number above -273.15 degrees Celsius to get an accurate temperature.</h4>';
+                }
+                else {
+                    document.querySelector(".fahrenheit").innerHTML = "The temperature is " + fahrenheit + " degrees Fahrenheit and " + kelvin + " degrees Kelvin.";
+                }
+            })
+            $(".clear").on('click', function () {
+                console.log('clear clicked');
+                $(".fahrenheit").empty();
+                $(".celsius").empty();
+                $(".kelvin").empty();
+                $("input").val('');
+            })
+
+            function getText() {
+                let text = document.getElementById("textareabox").value;
+            }
+        });
+    </script>
+</body>
+
+</html>
